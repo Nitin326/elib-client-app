@@ -1,11 +1,10 @@
-'use client'
 import { Book } from '@/types'
 import React from 'react'
 import BookCard from './BookCard'
 
 const BookList = async () => {
 
-  const response = await fetch('https://dummyjson.com/c/c4cb-ba60-4343-acd2',{cache:'no-store'});
+  const response = await fetch(`${process.env.BACKEND_URL}/books`,{cache:'no-store'});
 
   if(!response.ok){
     throw new Error()
