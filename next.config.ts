@@ -2,12 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-   images:{
-      remotePatterns:[{
-        protocol:'https',
-        hostname:'dummyimage.com'
-      }]
-   }
+  images: {
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'dummyimage.com'
+    }, {
+      protocol: 'https',
+      hostname: 'www.pdfbooksworld.com'
+    }]
+  }
 };
 
 export default nextConfig;

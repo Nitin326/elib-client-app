@@ -2,26 +2,23 @@ import { Book } from '@/types';
 import DownloadButton from '../components/DownloadButton'
 import Image from 'next/image'
 
-const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
+
+export default async function SingleBookPage({ params }: { params: { bookId: string } }) {
 
     let book: Book | null = null;
 
     try {
-        book  = {
-            _id: "1",
-            title: "The Lost Horizon",
-            description: "An adventurous tale set in the hidden valleys of the Himalayas.",
-            author: {
-                id: "a1",
-                name: "James Hilton"
+        const response = await fetch(`${process.env.BACKEND_URL}/books/${params.bookId}`, {
+            next: {
+                revalidate: 3600,
             },
-            coverImage: "https://dummyimage.com/300x400/000/fff&text=Lost+Horizon",
-            file: "https://example.com/files/lost_horizon.pdf",
-            genre: "Adventure"
+        });
+        if (!response.ok) {
+            throw new Error('Error fetching book');
         }
-
+        book = await response.json();
     } catch (err: any) {
-        throw new Error('Error in fetching book');
+        throw new Error('Error fetching book', err);
     }
 
     if (!book) {
@@ -50,5 +47,3 @@ const SingleBookPage = async ({ params }: { params: { bookId: string } }) => {
         </div>
     )
 }
-
-export default SingleBookPage;
